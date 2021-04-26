@@ -16,4 +16,10 @@ func init() {
 	//customer
 	beego.Router("/customer/add", &controllers.CustomerController{}, "post:Add")
 	beego.Router("/customer/:uid", &controllers.CustomerController{}, "get:QueryById")
+
+	//goods
+	beego.Router("/goods/type/add", &controllers.GoodsController{}, "post:AddGoodsType")
+	beego.Router("/goods/type", &controllers.GoodsController{}, "get:GetGoodsType")
+	beego.Router("/goods/add", &controllers.GoodsController{}, "post:AddGoods")
+	beego.Router("/goods", &controllers.GoodsController{}, "post:GetGoods")
 }

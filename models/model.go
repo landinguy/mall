@@ -1,6 +1,9 @@
 package models
 
-import "github.com/beego/beego/v2/client/orm"
+import (
+	"github.com/beego/beego/v2/client/orm"
+	"time"
+)
 
 var O orm.Ormer
 
@@ -10,38 +13,38 @@ type User struct {
 	Username    string `json:"username"`
 	Password    string `json:"password"`
 	Role        string `json:"role"`
-	PhoneNumber string `json:"phone_number"`
+	PhoneNumber string `json:"phoneNumber"`
 }
 
 // 工作人员信息实体
 type Worker struct {
 	Id     int `json:"id"`
-	UserId int `json:"user_id"`
+	UserId int `json:"userId"`
 	//工号
-	WorkNumber string `json:"work_number"`
+	WorkNumber string `json:"workNumber"`
 }
 
 // 上工记录实体
 type WorkRecord struct {
 	Id int `json:"id"`
 	//工作人员id
-	WorkerId int `json:"worker_id"`
+	WorkerId int `json:"workerId"`
 	//工作人员名称
-	WorkerName string `json:"worker_name"`
+	WorkerName string `json:"workerName"`
 	//工号
-	WorkNumber string `json:"work_number"`
+	WorkNumber string `json:"workNumber"`
 	//联系方式
-	PhoneNumber string `json:"phone_number"`
+	PhoneNumber string `json:"phoneNumber"`
 	//上工日期
-	Date string `json:"date"`
+	Date time.Time `orm:"auto_now_add;type(datetime)" json:"date"`
 }
 
 // 顾客实体
 type Customer struct {
 	Id     int `json:"id"`
-	UserId int `json:"user_id"`
+	UserId int `json:"userId"`
 	//农业合作社
-	AgriculturalCooperative string `json:"agricultural_cooperative"`
+	AgriculturalCooperative string `json:"agriculturalCooperative"`
 	//地址
 	Address string `json:"address"`
 }
@@ -50,11 +53,13 @@ type Customer struct {
 type Goods struct {
 	Id int `json:"id"`
 	//商品名称
-	GoodsName string `json:"goods_name"`
+	GoodsName string `json:"goodsName"`
 	//商品类型
-	GoodsType string `json:"goods_type"`
+	GoodsType string `json:"goodsType"`
 	//商品价格（单位/元）
 	Price float32 `json:"price"`
+	//商品添加时间
+	Date time.Time `orm:"auto_now_add;type(datetime)" json:"date"`
 }
 
 // 商品分类实体
@@ -68,9 +73,9 @@ type GoodsType struct {
 type Order struct {
 	Id int `json:"id"`
 	//用户id
-	UserId int `json:"user_id"`
+	UserId int `json:"userId"`
 	//顾客id
-	CustomerId int `json:"customer_id"`
+	CustomerId int `json:"customerId"`
 	//订单状态（1.待发货 2.已发货 3.确认收货）
 	Status int `json:"status"`
 }
@@ -79,9 +84,9 @@ type Order struct {
 type OrderDetail struct {
 	Id int `json:"id"`
 	//订单id
-	OrderId int `json:"order_id"`
+	OrderId int `json:"orderId"`
 	//商品id
-	GoodsId int `json:"goods_id"`
+	GoodsId int `json:"goodsId"`
 	//商品数量
 	Number int `json:"number"`
 }
@@ -90,32 +95,32 @@ type OrderDetail struct {
 type PurchaseDetail struct {
 	Id int `json:"id"`
 	//工人id
-	WorkerId int `json:"worker_id"`
+	WorkerId int `json:"workerId"`
 	//商品id
-	GoodsId int `json:"goods_id"`
+	GoodsId int `json:"goodsId"`
 	//生产日期
-	ProductionDate string `json:"production_date"`
+	ProductionDate string `json:"productionDate"`
 	//采购日期
-	Date string `json:"date"`
+	Date time.Time `orm:"auto_now_add;type(datetime)" json:"date"`
 	//采购数量
-	PurchaseNumber int `json:"purchase_number"`
+	PurchaseNumber int `json:"purchaseNumber"`
 	//厂家地址
-	ManufacturerAddress string `json:"manufacturer_address"`
+	ManufacturerAddress string `json:"manufacturerAddress"`
 	//厂家联系方式
-	ManufacturerPhone string `json:"manufacturer_phone"`
+	ManufacturerPhone string `json:"manufacturerPhone"`
 }
 
 // 仓储明细
 type StorageDetail struct {
 	Id int `json:"id"`
 	//工人id
-	WorkerId int `json:"worker_id"`
+	WorkerId int `json:"workerId"`
 	//商品id
-	GoodsId int `json:"goods_id"`
+	GoodsId int `json:"goodsId"`
 	//入仓日期
-	Date string `json:"date"`
+	Date time.Time `orm:"auto_now_add;type(datetime)" json:"date"`
 	//存放仓号
-	WarehouseNumber int `json:"warehouse_number"`
+	WarehouseNumber int `json:"warehouseNumber"`
 	//入仓数量
 	Number int `json:"number"`
 	//总存储量
@@ -126,17 +131,17 @@ type StorageDetail struct {
 type SaleDetail struct {
 	Id int `json:"id"`
 	//工人id
-	WorkerId int `json:"worker_id"`
+	WorkerId int `json:"workerId"`
 	//商品id
-	GoodsId int `json:"goods_id"`
+	GoodsId int `json:"goodsId"`
 	//售出日期
-	Date string `json:"date"`
+	Date time.Time `orm:"auto_now_add;type(datetime)" json:"date"`
 	//售出数量
 	Number int `json:"number"`
 	//买家姓名
-	CustomerName string `json:"customer_name"`
+	CustomerName string `json:"customerName"`
 	//买家联系方式
-	CustomerPhone string `json:"customer_phone"`
+	CustomerPhone string `json:"customerPhone"`
 }
 
 func init() {
