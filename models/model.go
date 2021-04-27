@@ -14,12 +14,10 @@ type User struct {
 	Password    string `json:"password"`
 	Role        string `json:"role"`
 	PhoneNumber string `json:"phoneNumber"`
-}
-
-// 工作人员信息实体
-type Worker struct {
-	Id     int `json:"id"`
-	UserId int `json:"userId"`
+	//农业合作社
+	AgriculturalCooperative string `json:"agriculturalCooperative"`
+	//地址
+	Address string `json:"address"`
 	//工号
 	WorkNumber string `json:"workNumber"`
 }
@@ -28,25 +26,15 @@ type Worker struct {
 type WorkRecord struct {
 	Id int `json:"id"`
 	//工作人员id
-	WorkerId int `json:"workerId"`
+	UserId int `json:"userId"`
 	//工作人员名称
-	WorkerName string `json:"workerName"`
+	Username string `json:"username"`
 	//工号
 	WorkNumber string `json:"workNumber"`
 	//联系方式
 	PhoneNumber string `json:"phoneNumber"`
 	//上工日期
 	Date time.Time `orm:"auto_now_add;type(datetime)" json:"date"`
-}
-
-// 顾客实体
-type Customer struct {
-	Id     int `json:"id"`
-	UserId int `json:"userId"`
-	//农业合作社
-	AgriculturalCooperative string `json:"agriculturalCooperative"`
-	//地址
-	Address string `json:"address"`
 }
 
 // 商品实体
@@ -74,8 +62,6 @@ type Order struct {
 	Id int `json:"id"`
 	//用户id
 	UserId int `json:"userId"`
-	//顾客id
-	CustomerId int `json:"customerId"`
 	//订单状态（1.待发货 2.已发货 3.确认收货）
 	Status int `json:"status"`
 }
@@ -94,14 +80,16 @@ type OrderDetail struct {
 // 采购明细
 type PurchaseDetail struct {
 	Id int `json:"id"`
-	//工人id
-	WorkerId int `json:"workerId"`
-	//商品id
-	GoodsId int `json:"goodsId"`
+	//用户id
+	UserId int `json:"userId"`
+	//商品名
+	GoodsName string `json:"goodsName"`
+	//商品类别
+	GoodsType string `json:"goodsType"`
 	//生产日期
 	ProductionDate string `json:"productionDate"`
 	//采购日期
-	Date time.Time `orm:"auto_now_add;type(datetime)" json:"date"`
+	PurchaseDate string `orm:"json:"purchaseDate`
 	//采购数量
 	PurchaseNumber int `json:"purchaseNumber"`
 	//厂家地址
@@ -113,8 +101,8 @@ type PurchaseDetail struct {
 // 仓储明细
 type StorageDetail struct {
 	Id int `json:"id"`
-	//工人id
-	WorkerId int `json:"workerId"`
+	//用户id
+	UserId int `json:"userId"`
 	//商品id
 	GoodsId int `json:"goodsId"`
 	//入仓日期
@@ -130,8 +118,8 @@ type StorageDetail struct {
 // 销售明细
 type SaleDetail struct {
 	Id int `json:"id"`
-	//工人id
-	WorkerId int `json:"workerId"`
+	//用户id
+	UserId int `json:"userId"`
 	//商品id
 	GoodsId int `json:"goodsId"`
 	//售出日期
@@ -146,7 +134,6 @@ type SaleDetail struct {
 
 func init() {
 	orm.RegisterModel(
-		new(User), new(Worker), new(WorkRecord), new(Customer), new(Goods), new(GoodsType), new(Order), new(OrderDetail),
-		new(PurchaseDetail), new(StorageDetail), new(SaleDetail),
+		new(User), new(WorkRecord), new(Goods), new(GoodsType), new(Order), new(OrderDetail), new(PurchaseDetail), new(StorageDetail), new(SaleDetail),
 	)
 }

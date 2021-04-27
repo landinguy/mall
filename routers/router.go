@@ -12,14 +12,29 @@ func init() {
 
 	//user
 	beego.Router("/user/register", &controllers.UserController{}, "post:Register")
-
-	//customer
-	beego.Router("/customer/add", &controllers.CustomerController{}, "post:Add")
-	beego.Router("/customer/:uid", &controllers.CustomerController{}, "get:QueryById")
+	beego.Router("/user", &controllers.UserController{}, "post:GetUser")
+	beego.Router("/user/save", &controllers.UserController{}, "post:SaveUser")
+	beego.Router("/user/:id", &controllers.UserController{}, "get:GetById")
 
 	//goods
 	beego.Router("/goods/type/add", &controllers.GoodsController{}, "post:AddGoodsType")
 	beego.Router("/goods/type", &controllers.GoodsController{}, "get:GetGoodsType")
-	beego.Router("/goods/add", &controllers.GoodsController{}, "post:AddGoods")
+	beego.Router("/goods/save", &controllers.GoodsController{}, "post:SaveGoods")
 	beego.Router("/goods", &controllers.GoodsController{}, "post:GetGoods")
+	beego.Router("/goods/:id", &controllers.GoodsController{}, "delete:DeleteGoods")
+
+	//work
+	beego.Router("/workRecord/save", &controllers.WorkController{}, "post:AddWorkRecord")
+
+	//purchase
+	beego.Router("/purchaseDetail/save", &controllers.PurchaseController{}, "post:AddDetail")
+	beego.Router("/purchaseDetail", &controllers.PurchaseController{}, "post:GetDetail")
+
+	//storage
+	beego.Router("/storageDetail/save", &controllers.StorageController{}, "post:AddDetail")
+	beego.Router("/storageDetail", &controllers.StorageController{}, "post:GetDetail")
+
+	//sale
+	beego.Router("/saleDetail/save", &controllers.SaleController{}, "post:AddDetail")
+	beego.Router("/saleDetail", &controllers.SaleController{}, "post:GetDetail")
 }

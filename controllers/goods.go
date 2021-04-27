@@ -12,6 +12,15 @@ type GoodsController struct {
 	beego.Controller
 }
 
+// 删除商品
+func (c *GoodsController) DeleteGoods() {
+	id, _ := c.GetInt(":id")
+	fmt.Printf("删除商品，id#%d\n", id)
+	models.O.Delete(&models.Goods{Id: id})
+	c.Data["json"] = utils.Ok()
+	c.ServeJSON()
+}
+
 // 查询商品
 func (c *GoodsController) GetGoods() {
 	result := utils.Ok()
@@ -32,17 +41,18 @@ func (c *GoodsController) GetGoods() {
 	c.ServeJSON()
 }
 
-// 添加商品
-func (c *GoodsController) AddGoods() {
+// 保存商品
+func (c *GoodsController) SaveGoods() {
 	result := utils.Ok()
 	var goods models.Goods
 	requestBody := c.Ctx.Input.RequestBody
-	fmt.Printf("添加商品, params#%s\n", string(requestBody))
-	err := json.Unmarshal(requestBody, &goods)
-	if err != nil {
-		fmt.Println("json.Unmarshal is err:", err.Error())
+	fmt.Printf("保存商品, params#%s\n", string(requestBody))
+	json.Unmarshal(requestBody, &goods)
+	if goods.Id != 0 {
+		models.O.Update(&goods)
+	} else {
+		models.O.Insert(&goods)
 	}
-	models.O.Insert(&goods)
 	c.Data["json"] = &result
 	c.ServeJSON()
 }
